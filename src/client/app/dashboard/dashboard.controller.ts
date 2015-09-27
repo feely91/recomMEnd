@@ -9,28 +9,32 @@ module app.dashboard {
 		messageCount: number = 0;
 		people: any[] = [];
 		title: string = 'Home';
-
 		constructor(private $q: angular.IQService,
 			private dataService: core.dataservice,
 			private logger: blocks.ILoggerService) {
 			this.activate();
 		}
 		activate(): any {
+			var instance: DashboardController = this;
 			var promises: any = [this.getMessageCount(), this.getPeople()];
 			return this.$q.all(promises).then(function(): void {
-                this.logger.info('Activated Dashboard View');
+                instance.logger.info('Activated Dashboard View');
             });
 		}
 		getMessageCount(): number {
-			 return this.dataService.getMessageCount().then(function (data: any): number {
-                this.messageCount = data;
-                return this.messageCount;
+			var instance: DashboardController = this;
+			return this.dataService.getMessageCount().then(function(data: number): number {
+                console.log(data);
+				instance.messageCount = data;
+                return instance.messageCount;
             });
 		}
 		getPeople(): any[] {
-			return this.dataService.getPeople().then(function (data: any): any[] {
-				this.people = data;
-				return this.people;
+			var instance: DashboardController = this;
+			return this.dataService.getPeople().then(function(data: Object[]): Object[] {
+				console.log(data);
+				instance.people = data;
+				return instance.people;
 			});
 		}
 	}

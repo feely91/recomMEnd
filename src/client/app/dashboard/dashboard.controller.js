@@ -18,21 +18,26 @@ var app;
                 this.activate();
             }
             DashboardController.prototype.activate = function () {
+                var instance = this;
                 var promises = [this.getMessageCount(), this.getPeople()];
                 return this.$q.all(promises).then(function () {
-                    this.logger.info('Activated Dashboard View');
+                    instance.logger.info('Activated Dashboard View');
                 });
             };
             DashboardController.prototype.getMessageCount = function () {
+                var instance = this;
                 return this.dataService.getMessageCount().then(function (data) {
-                    this.messageCount = data;
-                    return this.messageCount;
+                    console.log(data);
+                    instance.messageCount = data;
+                    return instance.messageCount;
                 });
             };
             DashboardController.prototype.getPeople = function () {
+                var instance = this;
                 return this.dataService.getPeople().then(function (data) {
-                    this.people = data;
-                    return this.people;
+                    console.log(data);
+                    instance.people = data;
+                    return instance.people;
                 });
             };
             DashboardController.$inject = ['$q', 'dataservice', 'logger'];

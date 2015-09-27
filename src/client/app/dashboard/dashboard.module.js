@@ -1,4 +1,3 @@
-/// <reference path="../../../../tools/typings/angularjs/angular.d.ts"/>
 (function () {
     'use strict';
     angular.module('app.dashboard', [
