@@ -30,16 +30,15 @@ function createUser(name, email, password) {
     pool.getConnection(function(err,connection){
         if (err) {
           connection.release();
-          
           return {"code" : 100, "status" : "Error in connection database"};
-        }   
+        }
 
         console.log('connected as id ' + connection.threadId);
         
         connection.query("select * from users where email=" + email + ", pword=" + password, function(err,rows){
             connection.release();
             if(!err) {
-                return rows;
+                                
             }           
         });
 
