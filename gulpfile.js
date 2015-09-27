@@ -45,6 +45,28 @@ gulp.task('vet', function() {
         .pipe($.jscs());
 });
 
+gulp.task('ts-analyze', function() {
+	log('Analyzing Typescript code');
+
+	return gulp
+		.src(config.tsSource)
+		.pipe($.tslint())
+		.pipe($.tslint.report('verbose'))
+});
+
+gulp.task('ts', ['ts-analyze'], function() {
+	log('Analyzing and compiling Typescript code');
+
+	var tsResult = gulp
+		.src([config.tsSource, config.tsDefinitions])
+		.pipe($.typescript({
+			noExternalResolve: false,
+			noImplicitAny: true
+		}));
+
+		return tsResult.js.pipe(gulp.dest('src'));
+});
+
 /**
  * Create a visualizer report
  */
@@ -139,7 +161,7 @@ gulp.task('wiredep', function() {
         .pipe(gulp.dest(config.client));
 });
 
-gulp.task('inject', ['wiredep', 'styles', 'templatecache'], function() {
+gulp.task('inject', ['ts', 'wiredep', 'styles', 'templatecache'], function() {
     log('Wire up css into the html, after files are ready');
 
     return gulp
@@ -306,7 +328,7 @@ gulp.task('clean-code', function(done) {
  *    gulp test --startServers
  * @return {Stream}
  */
-gulp.task('test', ['vet', 'templatecache'], function(done) {
+gulp.task('test', ['ts', 'templatecache'], function(done) {
     startTests(true /*singleRun*/ , done);
 });
 
@@ -440,7 +462,7 @@ function serve(isDev, specRunner) {
     }
 
     return $.nodemon(nodeOptions)
-        .on('restart', ['vet'], function(ev) {
+        .on('restart', ['ts'], function(ev) {
             log('*** nodemon restarted');
             log('files changed:\n' + ev);
             setTimeout(function() {
@@ -495,6 +517,8 @@ function startBrowserSync(isDev, specRunner) {
     if (isDev) {
         gulp.watch([config.less], ['styles'])
             .on('change', changeEvent);
+	gulp.watch(config.tsSource, ['ts'])
+	    .on('change', changeEvent);
     } else {
         gulp.watch([config.less, config.js, config.html], ['browserSyncReload'])
             .on('change', changeEvent);

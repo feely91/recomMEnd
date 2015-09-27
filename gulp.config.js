@@ -38,6 +38,8 @@ module.exports = function() {
             clientApp + '**/*.js',
             '!' + clientApp + '**/*.spec.js'
         ],
+	tsSource: './src/**/*.ts',
+	tsDefinitions: './tools/typings/**/*.d.ts',
         jsOrder: [
             '**/app.module.js',
             '**/*.module.js',

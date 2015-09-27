@@ -1,8 +1,9 @@
 /// <reference path="../../../../tools/typings/angularjs/angular.d.ts"/>
-(function () {
+((): void => {
     'use strict';
+
     angular.module('app.dashboard', [
         'app.core',
         'app.widgets'
-    ]);
+      ]);
 })();
