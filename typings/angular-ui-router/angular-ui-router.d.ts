@@ -247,7 +247,7 @@ declare module angular.ui {
         reload(): void;
         
         /** Currently pending transition. A promise that'll resolve or reject. */
-        transition: ng.IPromise<{}>;
+        transition: angular.IPromise<{}>;
         
         $current: IResolvedState;
     }

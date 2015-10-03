@@ -1,47 +1,38 @@
-(function() {
+var blocks;
+(function (blocks) {
     'use strict';
-
+    var LoggerService = (function () {
+        function LoggerService($log, toastr) {
+            this.$log = $log;
+            this.toastr = toastr;
+            this.showToasts = true;
+        }
+        LoggerService.prototype.error = function (message, data, title) {
+            this.toastr.error(message, title);
+            this.$log.error('Error: ' + message, data);
+        };
+        LoggerService.prototype.info = function (message, data, title) {
+            this.toastr.info(message, title);
+            this.$log.info('Info: ' + message, data);
+        };
+        LoggerService.prototype.success = function (message, data, title) {
+            this.toastr.success(message, title);
+            this.$log.info('Success: ' + message, data);
+        };
+        LoggerService.prototype.warning = function (message, data, title) {
+            this.toastr.warning(message, title);
+            this.$log.warn('Warning: ' + message, data);
+        };
+        LoggerService.prototype.log = function (message, data) {
+            this.$log.log(message, data);
+        };
+        return LoggerService;
+    })();
+    factory.$inject = ['$log', 'toastr'];
+    function factory($log, toastr) {
+        return new LoggerService($log, toastr);
+    }
     angular
         .module('blocks.logger')
-        .factory('logger', logger);
-
-    logger.$inject = ['$log', 'toastr'];
-
-    /* @ngInject */
-    function logger($log, toastr) {
-        var service = {
-            showToasts: true,
-
-            error   : error,
-            info    : info,
-            success : success,
-            warning : warning,
-
-            // straight to console; bypass toastr
-            log     : $log.log
-        };
-
-        return service;
-        /////////////////////
-
-        function error(message, data, title) {
-            toastr.error(message, title);
-            $log.error('Error: ' + message, data);
-        }
-
-        function info(message, data, title) {
-            toastr.info(message, title);
-            $log.info('Info: ' + message, data);
-        }
-
-        function success(message, data, title) {
-            toastr.success(message, title);
-            $log.info('Success: ' + message, data);
-        }
-
-        function warning(message, data, title) {
-            toastr.warning(message, title);
-            $log.warn('Warning: ' + message, data);
-        }
-    }
-}());
+        .factory('logger', factory);
+})(blocks || (blocks = {}));

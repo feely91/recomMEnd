@@ -5,6 +5,7 @@ var del = require('del');
 var glob = require('glob');
 var gulp = require('gulp');
 var path = require('path');
+var mocha = require('gulp-mocha');
 var _ = require('lodash');
 var $ = require('gulp-load-plugins')({lazy: true});
 

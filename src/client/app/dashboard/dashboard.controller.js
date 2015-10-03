@@ -26,21 +26,19 @@ var app;
             };
             DashboardController.prototype.getMessageCount = function () {
                 var instance = this;
-                return this.dataService.getMessageCount().then(function (data) {
+                this.dataService.getMessageCount().then(function (data) {
                     console.log(data);
                     instance.messageCount = data;
-                    return instance.messageCount;
                 });
             };
             DashboardController.prototype.getPeople = function () {
                 var instance = this;
-                return this.dataService.getPeople().then(function (data) {
+                this.dataService.getPeople().then(function (data) {
                     console.log(data);
                     instance.people = data;
-                    return instance.people;
                 });
             };
-            DashboardController.$inject = ['$q', 'dataservice', 'logger'];
+            DashboardController.$inject = ['$q', 'dataService', 'logger'];
             return DashboardController;
         })();
         angular

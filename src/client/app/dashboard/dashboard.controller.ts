@@ -1,7 +1,7 @@
 module app.dashboard {
 	'use strict';
 	class DashboardController {
-		public static $inject: any[] = ['$q', 'dataservice', 'logger'];
+		public static $inject: any[] = ['$q', 'dataService', 'logger'];
 		news: Object = {
 			title: 'New News Title',
 			description: 'Make this something else'
@@ -10,7 +10,7 @@ module app.dashboard {
 		people: any[] = [];
 		title: string = 'Home';
 		constructor(private $q: angular.IQService,
-			private dataService: core.dataservice,
+			private dataService: core.IDataService,
 			private logger: blocks.ILoggerService) {
 			this.activate();
 		}
@@ -21,20 +21,18 @@ module app.dashboard {
                 instance.logger.info('Activated Dashboard View');
             });
 		}
-		getMessageCount(): number {
+		getMessageCount(): void {
 			var instance: DashboardController = this;
-			return this.dataService.getMessageCount().then(function(data: number): number {
+			this.dataService.getMessageCount().then(function(data: number): void {
                 console.log(data);
 				instance.messageCount = data;
-                return instance.messageCount;
             });
 		}
-		getPeople(): any[] {
+		getPeople(): void {
 			var instance: DashboardController = this;
-			return this.dataService.getPeople().then(function(data: Object[]): Object[] {
+			this.dataService.getPeople().then(function(data: Object[]): void {
 				console.log(data);
 				instance.people = data;
-				return instance.people;
 			});
 		}
 	}

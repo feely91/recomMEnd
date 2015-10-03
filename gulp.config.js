@@ -41,9 +41,11 @@ module.exports = function() {
 	tsSource: './src/**/*.ts',
 	tsDefinitions: './typings/**/*.d.ts',
         jsOrder: [
-            '**/app.module.js',
-            '**/*.module.js',
-            '**/*.js'
+             '**/app.module.js',
+             '**/*.module.js',
+             '**/*.route.js',
+             '**/*.controller.js',
+             '**/*.js'
         ],
         less: client + 'styles/styles.less',
         report: report,
