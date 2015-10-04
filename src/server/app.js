@@ -6,6 +6,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var mysql = require('mysql');
 var port = process.env.PORT || 8001;
 var four0four = require('./utils/404')();
 
@@ -21,6 +22,15 @@ app.use('/api', require('./routes'));
 console.log('About to crank up node');
 console.log('PORT=' + port);
 console.log('NODE_ENV=' + environment);
+
+var pool = mysql.createPool({
+            connectionLimit: 100, //important
+            host: 'localhost',
+            user: 'node-website-man',
+            password: 'L4dd13B0y!',
+            database: 'recommenddb',
+            debug: false
+        });
 
 switch (environment){
     case 'build':
