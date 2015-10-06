@@ -7,7 +7,7 @@
 
     AdminController.$inject = ['logger', 'dataService'];
     /* @ngInject */
-    function AdminController(logger) {
+    function AdminController(logger, dataService) {
         var vm = this;
         vm.title = 'Admin';
         
