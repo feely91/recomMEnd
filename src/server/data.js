@@ -1,9 +1,6 @@
-module.exports = {
-    people: getPeople()
-};
+var db = require('./db');
 
-
-function getPeople() {
+module.exports.people = function getPeople(callback) {
     // return [
     //     { id: 1, firstName: 'John', lastName: 'Papa', age: 25, location: 'Florida' },
     //     { id: 2, firstName: 'Ward', lastName: 'Bell', age: 31, location: 'California' },
@@ -14,14 +11,16 @@ function getPeople() {
     //     { id: 7, firstName: 'Haley', lastName: 'Guthrie', age: 35, location: 'Wyoming' },
     //     { id: 8, firstName: 'Aaron', lastName: 'Jinglehiemer', age: 22, location: 'Utah' }
     // ];
-    return createUser("adam", "adam@adam.test", "testPass");
-}
+
+    createUser("adam", "adam@adam.test", "testPass", function(err, data) {
+        callback(err, data);
+    });
+
+};
 
 
-    
-
-function createUser(name, email, password) {  
-    pool.getConnection(function (err, connection) {
+function createUser(name, email, password, callback) {  
+    db.getConnection(function (err, connection) {
         if (err) {
             console.log('ERROR ' + err);
             
@@ -36,12 +35,12 @@ function createUser(name, email, password) {
             
             if(err){
                 console.log('ERROR on Query = ' + err);
+                callback(err, null);
             }
             
             if (!err) {
-                
                 console.log('USER QUERY = ' + rows[0].name );
-                return rows[0];
+                callback(null, JSON.stringify(rows[0]));
             }
         });
 
@@ -53,5 +52,5 @@ function createUser(name, email, password) {
         });
     });
     
-} 
+};
 

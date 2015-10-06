@@ -11,7 +11,17 @@ module.exports = router;
 //////////////
 
 function getPeople(req, res, next) {
-    res.status(200).send(data.people);
+    
+    data.people(function(err, results){
+        if(err){
+            res.status(200).send('Problem getting people');
+        } else {
+            res.status(200).send(results);
+        }  
+        
+    });
+    
+    
 }
 
 function getPerson(req, res, next) {
