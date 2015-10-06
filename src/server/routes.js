@@ -12,7 +12,7 @@ module.exports = router;
 
 function getPeople(req, res, next) {
     
-    data.people(function(err, results){
+    data.createUser('','','' ,function(err, results){
         if(err){
             res.status(200).send('Problem getting people');
         } else {

@@ -9,8 +9,32 @@ var pool = mysql.createPool({
             debug: false
         });
 
-exports.getConnection = function(callback) {
-    pool.getConnection(function(err, connection) {
-        callback(err, connection);
-    });
-};
+exports.createUser = 
+
+function createUser(name, email, password, callback) {
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            console.log('ERROR ' + err);
+            
+            connection.release();
+            return { "code": 100, "status": "Error in connection database" };
+        }
+
+        console.log('connected as id ' + connection.threadId);
+
+        connection.query("select * from users where id=1", function (err, rows) {
+            connection.release();
+            
+            if(err){
+                console.log('ERROR on Query = ' + err);
+                callback(err, null);
+            }
+            
+            if (!err) {
+                console.log('USER QUERY = ' + rows[0].name );
+                callback(null, JSON.stringify(rows[0]));
+            }
+        });
+        
+    }); 
+}
