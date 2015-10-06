@@ -13,7 +13,7 @@ var app;
                 return this.$q.when(0);
             };
             DataService.prototype.getPeople = function () {
-                return this.$http.get('api/people')
+                return this.$http.post('api/createUser', { name: 'Adam', email: 'adam.feely@test.com', pass: 'testPassword' })
                     .then(function success(response) {
                     return response.data;
                 }, function fail(response) {

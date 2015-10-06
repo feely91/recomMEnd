@@ -9,20 +9,18 @@ var pool = mysql.createPool({
             debug: false
         });
 
-exports.createUser = 
-
-function createUser(name, email, password, callback) {
+exports.createUser = function createUser(name, email, password, callback) {
     pool.getConnection(function (err, connection) {
         if (err) {
             console.log('ERROR ' + err);
-            
             connection.release();
             return { "code": 100, "status": "Error in connection database" };
         }
 
         console.log('connected as id ' + connection.threadId);
 
-        connection.query("select * from users where id=1", function (err, rows) {
+        connection.query("INSERT INTO users(name, email, pword) VALUES(?, ?, ?)", 
+            [mysql.escape(name), mysql.escape(email), mysql.escape(password)], function (err, rows) {
             connection.release();
             
             if(err){
@@ -36,5 +34,35 @@ function createUser(name, email, password, callback) {
             }
         });
         
-    }); 
+    });
+}
+
+exports.updateUser = function updateUser(id, name, email, password, callback) {
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            console.log('ERROR ' + err);
+            connection.release();
+            return { "code": 100, "status": "Error in connection database" };
+        }
+
+        console.log('connected as id ' + connection.threadId);
+
+        connection.query("UPDATE users name = ?, email = ?, pword = ? WHERE id = ?", 
+            [mysql.escape(name), mysql.escape(email), mysql.escape(password), mysql.escape(id)], 
+                function (err, rows) {
+            
+            connection.release();
+            
+            if(err){
+                console.log('ERROR on Query = ' + err);
+                callback(err, null);
+            }
+            
+            if (!err) {
+                console.log('USER QUERY = ' + rows[0].name );
+                callback(null, JSON.stringify(rows[0]));
+            }
+        });
+        
+    });
 }

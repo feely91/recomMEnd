@@ -30,10 +30,10 @@ module app.dashboard {
 		}
 		getPeople(): void {
 			var instance: DashboardController = this;
-			this.dataService.getPeople().then(function(data: Object[]): void {
-				console.log(data);
-				instance.people = data;
-			});
+			// this.dataService.getPeople().then(function(data: Object[]): void {
+			// 	console.log(data);
+			// 	instance.people = data;
+			// });
 		}
 	}
 	angular
