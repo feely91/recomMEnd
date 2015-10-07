@@ -32,11 +32,11 @@ var app;
                 });
             };
             DashboardController.prototype.getPeople = function () {
-                var instance = this;
-                this.dataService.getPeople().then(function (data) {
-                    console.log(data);
-                    instance.people = data;
-                });
+                // var instance: DashboardController = this;
+                // this.dataService.getPeople().then(function(data: Object[]): void {
+                // 	console.log(data);
+                // 	instance.people = data;
+                // });
             };
             DashboardController.$inject = ['$q', 'dataService', 'logger'];
             return DashboardController;

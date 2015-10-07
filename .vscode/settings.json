@@ -1,3 +1,22 @@
 // Place your settings in this file to overwrite default and user settings.
 {
+		"files.exclude": {
+		"**/.git": true,
+		"**/*.js": { "when": "$(basename).ts"},
+		"**/bower_components": true,
+		"**/node_modules": true
+	},
+
+	// When enabled, will trim trailing whitespace when you save a file.
+	"files.trimTrailingWhitespace": true,
+
+	// Complete functions with their parameter signature.
+	"javascript.suggest.useCodeSnippetsOnMethodSuggest": true,
+
+	// Configure glob patterns for excluding files and folders in searches. Inherits all glob patterns from the file.exclude setting.
+	"search.exclude": {
+		"**/report": true,
+		"**/build": true,
+		"**/.tmp": true
+		}
 }

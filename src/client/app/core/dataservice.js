@@ -12,12 +12,34 @@ var app;
             DataService.prototype.getMessageCount = function () {
                 return this.$q.when(0);
             };
-            DataService.prototype.getPeople = function () {
-                return this.$http.post('api/createUser', { name: 'Adam', email: 'adam.feely@test.com', pass: 'testPassword' })
+            DataService.prototype.createUser = function (name, email, password, callback) {
+                this.$http.post('api/createUser', { name: name, email: email, pass: password })
                     .then(function success(response) {
-                    return response.data;
+                    callback(null, response.data);
                 }, function fail(response) {
-                    return 'Failed to get people';
+                    callback('Failed to get people', null);
+                });
+            };
+            DataService.prototype.getUser = function (id, callback) {
+                this.$http.get('api/getUser/' + id)
+                    .then(function success(response) {
+                    callback(null, response.data);
+                }, function fail(response) {
+                    callback('Failed to get people', null);
+                });
+            };
+            DataService.prototype.updateUser = function (id, name, email, password, callback) {
+                // console.log('DATASERVICE TS UPDATE USER');
+                // console.log('DATASERVICE TS ID = ' + id);
+                // console.log('DATASERVICE TS NAME = ' + name);
+                // console.log('DATASERVICE TS EMAIL = ' + email);
+                this.$http.post('api/updateUser/' + id, { name: name, email: email, pword: password })
+                    .then(function success(response) {
+                    // console.log('DATASERVICE TS UPDATEUSER = ' + response.data);
+                    callback(null, response.data);
+                }, function fail(response) {
+                    // console.log('DATASERVICE TS UPDATEUSER ERROR = ' + response);
+                    callback('Failed to get people', null);
                 });
             };
             DataService.$inject = ['$http', '$q', 'logger'];
